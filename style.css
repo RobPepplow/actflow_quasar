@@ -1,0 +1,126 @@
+<template>
+  <div class="q-pa-md q-gutter-sm">
+    <q-btn label="Alert" color="primary" @click="alert = true" />
+    <q-btn label="Confirm" color="primary" @click="confirm = true" />
+    <q-btn label="Prompt" color="primary" @click="prompt = true" />
+
+    
+
+    <q-dialog v-model="confirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+            <q-form
+            @submit="onSubmit"
+            @reset="onReset"
+            class="row q-col-gutter-sm"
+              >
+              <span class="text-h5" style="color:#BD153D; font-style: italic;" color="red">Cadastro Usuários</span>
+                <q-input
+                  outlined
+                  v-model="form.name"
+                  label="Nome"
+                  hint="Digite o Nome do usuário"
+                  class="col-xs-12"
+                  lazy-rules
+                  :rules="[ val => val && val.length > 0 || '*campo obrigatório']"
+                ></q-input>
+          
+                <q-input
+                  outlined
+                  v-model="form.email"
+                  label="Email"
+                  hint="Digite o Email"
+                  class="col-xs-12"
+                  lazy-rules
+                  :rules="[ val => val && val.length > 0 || '*campo obrigatório']"
+                ></q-input>
+          
+                <q-input
+                  outlined
+                  v-model="form.password"
+                  label="Senha"
+                  hint="Digite a Senha"
+                  class="col-lg-6 col-xs-12"
+                  :type="isPwd2 ? 'password' : 'text'"
+                  lazy-rules
+                  :rules="[ val => val && val.length > 0 || '*campo obrigatório']"
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd2 ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd2 = !isPwd2"
+                      />
+                    </template>
+                  </q-input>
+          
+                  <q-input
+                    outlined
+                    v-model="form.confPassword"
+                    label="Confirme sua Senha"
+                    hint="Confirme a Senha"
+                    class="col-lg-6 col-xs-12"
+                    :type="isPwd ? 'password' : 'text'"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || '*campo obrigatório']"
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                      />
+                    </template>
+                </q-input>
+                <q-select
+                outlined
+                v-model="model"
+                :options="options"
+                label="Tipo de Usuário"
+                lazy-rules
+                class="col-xs-12"
+                />
+      
+            <q-btn
+                style="padding:20px; margin:20px"
+                color="blue"
+                icon-right="las la-download"
+                label="Salvar"
+      
+              />
+              <q-btn
+                style="padding:20px; margin:20px; txext-align: end;"
+                color="primary"
+                icon-right="las la-plus"
+                label="Voltar"
+                :to="{ name: 'Users'}"
+              />     
+      
+          </q-form>  
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />          
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue'
+
+export default {
+  setup () {
+    return {
+      alert: ref(false),
+      confirm: ref(false),
+      prompt: ref(false),
+
+      address: ref('')
+    }
+  }
+}
+</script>
